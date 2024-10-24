@@ -65,7 +65,7 @@ def convert_pkl(old_pkl, new_pkl):
         pickle.dump(loaded, outfile)
 
 DEFAULT_CHECKPOINT=f'{CACHE_DIR_4DHUMANS}/logs/train/multiruns/hmr2/0/checkpoints/epoch=35-step=1000000.ckpt'
-def load_hmr2(checkpoint_path=DEFAULT_CHECKPOINT):
+def load_hmr2(checkpoint_path=DEFAULT_CHECKPOINT, **kwargs):
     from pathlib import Path
     from ..configs import get_config
     model_cfg = str(Path(checkpoint_path).parent.parent / 'model_config.yaml')
@@ -81,5 +81,5 @@ def load_hmr2(checkpoint_path=DEFAULT_CHECKPOINT):
     # Ensure SMPL model exists
     check_smpl_exists()
 
-    model = HMR2.load_from_checkpoint(checkpoint_path, strict=False, cfg=model_cfg)
+    model = HMR2.load_from_checkpoint(checkpoint_path, strict=False, cfg=model_cfg, **kwargs)
     return model, model_cfg
